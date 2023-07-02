@@ -55,7 +55,7 @@ jobs:
           AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
         run: |
-          cd src/Unix/MacOSX/build/Release/
+          cd build/Release/
           for item in *.app *.dmg ; do
             codesign --verify --deep --verbose "$item" || echo "codesign: NOK"
             spctl --assess --type execute --context context:primary-signature -vvv "$item" || echo "spctl: NOK"
