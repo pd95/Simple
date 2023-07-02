@@ -17,13 +17,12 @@ jobs:
 
       - name: Build
         env:
-          scheme: ${{ 'default' }}
+          DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
         run: |
           xcodebuild build -project Simple.xcodeproj -target Simple -configuration Release \
                 CODE_SIGN_IDENTITY=" " \
                 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
-                DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
-            | xcpretty && exit ${PIPESTATUS[0]}
+                DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM"
 
           cd build/Release
           for item in MacAranym.app aranym-*dmg ; do
