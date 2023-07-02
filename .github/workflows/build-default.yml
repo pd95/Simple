@@ -1,4 +1,4 @@
-name: Xcode - Build and Analyze
+name: Build and Analyze
 
 on:
   push:
@@ -8,23 +8,25 @@ on:
 
 jobs:
   build:
-    name: Build and analyse default scheme using xcodebuild command
+    name: Build
     runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set Default Scheme
-        run: |
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
-          echo Using default scheme: $default
+
       - name: Build
         env:
           scheme: ${{ 'default' }}
         run: |
-          if [ $scheme = default ]; then scheme=$(cat default); fi
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild clean build analyze -scheme "$scheme" -"$filetype_parameter" "$file_to_build" | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild build -project Simple.xcodeproj -target Simple -configuration Release \
+                CODE_SIGN_IDENTITY=" " \
+                CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
+                DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
+            | xcpretty && exit ${PIPESTATUS[0]}
+
+          cd build/Release
+          for item in MacAranym.app aranym-*dmg ; do
+            codesign --verify --deep --verbose "$item" || echo "codesign: NOK"
+            spctl --assess --type execute --context context:primary-signature -vvv "$item" || echo "spctl: NOK"
+          done
