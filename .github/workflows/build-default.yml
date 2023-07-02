@@ -15,6 +15,28 @@ jobs:
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
 
+      - name: Install Apple certificate
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain-db
+
+          # import certificate from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -22,13 +44,28 @@ jobs:
         env:
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
         run: |
-          xcodebuild build -project Simple.xcodeproj -target Simple -configuration Release \
-                CODE_SIGN_IDENTITY="-" \
+          xcodebuild build -project Simple.xcodeproj -target Packaging -configuration Release \
+                CODE_SIGN_IDENTITY="Developer ID Application" \
                 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
                 DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM"
 
-          cd build/Release
-          for item in *.app *dmg ; do
+      - name: Notarize dmg
+        env:
+          AC_USER: ${{ secrets.AC_ACCOUNT }}
+          AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
+          DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+        run: |
+          cd src/Unix/MacOSX/build/Release/
+          for item in *.app *.dmg ; do
             codesign --verify --deep --verbose "$item" || echo "codesign: NOK"
             spctl --assess --type execute --context context:primary-signature -vvv "$item" || echo "spctl: NOK"
           done
+          xcrun notarytool store-credentials AC_PASSWORD --apple-id "$AC_USER" --team-id "$DEVELOPMENT_TEAM" --password "$AC_PASSWORD"
+          xcrun notarytool submit *.dmg --keychain-profile AC_PASSWORD --wait
+          xcrun stapler staple *.dmg
+
+      - name: Upload dmg
+        uses: actions/upload-artifact@v3
+        with:
+          name: Disk image
+          path: build/Release/*.dmg
