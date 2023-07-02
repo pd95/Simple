@@ -6,12 +6,37 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		1765764D2A52225300C01010 /* Packaging */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 1765764E2A52225300C01010 /* Build configuration list for PBXAggregateTarget "Packaging" */;
+			buildPhases = (
+				176576532A52226800C01010 /* ShellScript */,
+			);
+			dependencies = (
+				176576522A52225E00C01010 /* PBXTargetDependency */,
+			);
+			name = Packaging;
+			productName = Packaging;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		1765763C2A5212FB00C01010 /* SimpleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1765763B2A5212FB00C01010 /* SimpleApp.swift */; };
 		1765763E2A5212FB00C01010 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1765763D2A5212FB00C01010 /* ContentView.swift */; };
 		176576402A5212FC00C01010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1765763F2A5212FC00C01010 /* Assets.xcassets */; };
 		176576432A5212FC00C01010 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 176576422A5212FC00C01010 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		176576512A52225E00C01010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 176576302A5212FB00C01010 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 176576372A5212FB00C01010;
+			remoteInfo = Simple;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		176576382A5212FB00C01010 /* Simple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +145,9 @@
 					176576372A5212FB00C01010 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					1765764D2A52225300C01010 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 				};
 			};
 			buildConfigurationList = 176576332A5212FB00C01010 /* Build configuration list for PBXProject "Simple" */;
@@ -136,6 +164,7 @@
 			projectRoot = "";
 			targets = (
 				176576372A5212FB00C01010 /* Simple */,
+				1765764D2A52225300C01010 /* Packaging */,
 			);
 		};
 /* End PBXProject section */
@@ -152,6 +181,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		176576532A52226800C01010 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "DMGNAME=$TARGET_BUILD_DIR/$PROJECT-$MARKETING_VERSION-macosx-`echo $ARCHS | tr \" \" \"_\"`.dmg\necho \"Building disk image $DMGNAME...\"\nhdiutil create \"$DMGNAME\" -ov -volname \"$PROJECT $MARKETING_VERSION\" -srcfolder . -format UDZO\n Type a script or drag a script file from your workspace to insert its path.\ncodesign -s \"$CODE_SIGN_IDENTITY\" --timestamp -i org.aranym.MacAranym.diskimage \"$DMGNAME\"\nopen -R $DMGNAME\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		176576342A5212FB00C01010 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -163,6 +214,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		176576522A52225E00C01010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 176576372A5212FB00C01010 /* Simple */;
+			targetProxy = 176576512A52225E00C01010 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		176576452A5212FC00C01010 /* Debug */ = {
@@ -198,6 +257,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -215,7 +275,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -258,6 +319,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -269,7 +331,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -286,7 +349,6 @@
 				CODE_SIGN_ENTITLEMENTS = Simple/Simple.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -295,8 +357,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -312,7 +372,6 @@
 				CODE_SIGN_ENTITLEMENTS = Simple/Simple.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Simple/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -321,12 +380,26 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.Simple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		1765764F2A52225300C01010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		176576502A52225300C01010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -347,6 +420,15 @@
 			buildConfigurations = (
 				176576482A5212FC00C01010 /* Debug */,
 				176576492A5212FC00C01010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1765764E2A52225300C01010 /* Build configuration list for PBXAggregateTarget "Packaging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1765764F2A52225300C01010 /* Debug */,
+				176576502A52225300C01010 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
