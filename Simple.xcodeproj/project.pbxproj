@@ -199,7 +199,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "DMGNAME=$TARGET_BUILD_DIR/$PROJECT-$MARKETING_VERSION-macosx-`echo $ARCHS | tr \" \" \"_\"`.dmg\necho \"Building disk image $DMGNAME...\"\nhdiutil create \"$DMGNAME\" -ov -volname \"$PROJECT $MARKETING_VERSION\" -srcfolder . -format UDZO\ncodesign -s \"$CODE_SIGN_IDENTITY\" --timestamp -i Simple.diskimage \"$DMGNAME\"\nopen -R $DMGNAME\n";
+			shellScript = "cd \"$TARGET_BUILD_DIR\"\nDMGNAME=$PROJECT-$MARKETING_VERSION-macosx-`echo $ARCHS | tr \" \" \"_\"`.dmg\necho \"Building disk image $DMGNAME...\"\n\nhdiutil create \"$DMGNAME\" -ov -volname \"$PROJECT $MARKETING_VERSION\" -srcfolder Simple*.app -format UDZO\ncodesign -s \"$CODE_SIGN_IDENTITY\" --timestamp -i Simple.diskimage \"$DMGNAME\"\nopen -R $DMGNAME\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
