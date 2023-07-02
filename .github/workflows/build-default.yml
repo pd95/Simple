@@ -51,7 +51,7 @@ jobs:
 
       - name: Notarize dmg
         env:
-          AC_USER: ${{ secrets.AC_ACCOUNT }}
+          AC_USER: ${{ secrets.AC_USER }}
           AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
         run: |
