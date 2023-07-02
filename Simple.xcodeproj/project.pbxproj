@@ -20,6 +20,7 @@
 		1765763F2A5212FC00C01010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		176576422A5212FC00C01010 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		176576442A5212FC00C01010 /* Simple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Simple.entitlements; sourceTree = "<group>"; };
+		1765764C2A52158600C01010 /* build-default.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "build-default.yml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +37,7 @@
 		1765762F2A5212FB00C01010 = {
 			isa = PBXGroup;
 			children = (
+				1765764A2A52158600C01010 /* .github */,
 				1765763A2A5212FB00C01010 /* Simple */,
 				176576392A5212FB00C01010 /* Products */,
 			);
@@ -67,6 +69,22 @@
 				176576422A5212FC00C01010 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1765764A2A52158600C01010 /* .github */ = {
+			isa = PBXGroup;
+			children = (
+				1765764B2A52158600C01010 /* workflows */,
+			);
+			path = .github;
+			sourceTree = "<group>";
+		};
+		1765764B2A52158600C01010 /* workflows */ = {
+			isa = PBXGroup;
+			children = (
+				1765764C2A52158600C01010 /* build-default.yml */,
+			);
+			path = workflows;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
