@@ -7,11 +7,11 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "NO"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
             buildForArchiving = "YES"
-            buildForAnalyzing = "NO">
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1765764D2A52225300C01010"
@@ -39,16 +39,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "176576372A5212FB00C01010"
-            BuildableName = "Simple.app"
-            BlueprintName = "Simple"
-            ReferencedContainer = "container:Simple.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -59,9 +49,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "176576372A5212FB00C01010"
-            BuildableName = "Simple.app"
-            BlueprintName = "Simple"
+            BlueprintIdentifier = "1765764D2A52225300C01010"
+            BuildableName = "Packaging"
+            BlueprintName = "Packaging"
             ReferencedContainer = "container:Simple.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
