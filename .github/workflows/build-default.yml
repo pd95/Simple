@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: macos-latest self-hosted
+    runs-on: [macOS, self-hosted]
 
     steps:
       - name: Xcode version
