@@ -62,17 +62,12 @@ jobs:
             spctl --assess --type execute --context context:primary-signature -vvv "$item" || echo "spctl: NOK"
           done
 
-          # create variables
           KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain-db
+          #security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          #security list-keychain -d user -s $KEYCHAIN_PATH
 
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-
-          echo before notary store
           xcrun notarytool store-credentials AC_PASSWORD --apple-id "$AC_USER" --team-id "$DEVELOPMENT_TEAM" --password "$AC_PASSWORD" --keychain $KEYCHAIN_PATH
-          echo before notary submit
           xcrun notarytool submit *.dmg --keychain-profile AC_PASSWORD --keychain $KEYCHAIN_PATH --wait
-          echo before staple
           xcrun stapler staple *.dmg
 
       - name: Upload dmg
