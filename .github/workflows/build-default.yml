@@ -60,6 +60,7 @@ jobs:
             codesign --verify --deep --verbose "$item" || echo "codesign: NOK"
             spctl --assess --type execute --context context:primary-signature -vvv "$item" || echo "spctl: NOK"
           done
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           xcrun notarytool store-credentials AC_PASSWORD --apple-id "$AC_USER" --team-id "$DEVELOPMENT_TEAM" --password "$AC_PASSWORD"
           xcrun notarytool submit *.dmg --keychain-profile AC_PASSWORD --wait
           xcrun stapler staple *.dmg
