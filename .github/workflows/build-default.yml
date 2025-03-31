@@ -54,6 +54,7 @@ jobs:
           AC_USER: ${{ secrets.AC_USER }}
           AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           cd build/Release/
           for item in *.app *.dmg ; do
