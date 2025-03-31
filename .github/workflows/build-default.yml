@@ -63,11 +63,8 @@ jobs:
           done
 
           KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain-db
-          #security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          #security list-keychain -d user -s $KEYCHAIN_PATH
-
-          xcrun notarytool store-credentials AC_PASSWORD --apple-id "$AC_USER" --team-id "$DEVELOPMENT_TEAM" --password "$AC_PASSWORD" --keychain $KEYCHAIN_PATH
-          xcrun notarytool submit *.dmg --keychain-profile AC_PASSWORD --keychain $KEYCHAIN_PATH --wait
+          xcrun notarytool store-credentials AC_PASSWORD --apple-id "$AC_USER" --team-id "$DEVELOPMENT_TEAM" --password "$AC_PASSWORD" --keychain "$KEYCHAIN_PATH"
+          xcrun notarytool submit *.dmg --keychain-profile AC_PASSWORD --keychain "$KEYCHAIN_PATH" --wait
           xcrun stapler staple *.dmg
 
       - name: Upload dmg
