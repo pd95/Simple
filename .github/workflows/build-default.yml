@@ -56,8 +56,13 @@ jobs:
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
+          # create variables
+          KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain-db
+          ls -al "$KEYCHAIN_PATH"
+          security list-keychains -s $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
           cd build/Release/
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $RUNNER_TEMP/build.keychain-db
           for item in *.app *.dmg ; do
             codesign --verify --deep --verbose "$item" || echo "codesign: NOK"
             spctl --assess --type execute --context context:primary-signature -vvv "$item" || echo "spctl: NOK"
