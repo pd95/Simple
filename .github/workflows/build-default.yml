@@ -44,17 +44,19 @@ jobs:
       - name: Build
         env:
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+          DEVELOPMENT_TEAM_NAME: ${{ secrets.DEVELOPMENT_TEAM_NAME }}
         run: |
           xcodebuild build -project Simple.xcodeproj -target Packaging -configuration Release \
                 CODE_SIGN_IDENTITY="Developer ID Application" \
                 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
-                DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM"
+                DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
 
       - name: Notarize dmg
         env:
           AC_USER: ${{ secrets.AC_USER }}
           AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
           DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+          DEVELOPMENT_TEAM_NAME: ${{ secrets.DEVELOPMENT_TEAM_NAME }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           cd build/Release/
